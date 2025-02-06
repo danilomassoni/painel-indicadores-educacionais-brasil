@@ -13,7 +13,7 @@ def run_etl():
     raw_data_path = "data/raw/merged_df.csv"
     processed_data_path = "data/processed/transformed_data.csv"
     indicadores = "indicadores_educacionais"
-    db_url = os.getenv("DATABASE_URL", "postgresql://user:password@localhost:5432/meubanco")
+    db_url = os.getenv("DATABASE_URL", "postgresql://user:password@localhost:5432/painel_indicadores_educacionais")
 
     # Extração
     print ("Extraindo os dados........")

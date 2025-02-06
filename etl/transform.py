@@ -16,7 +16,7 @@ def handle_missing_values(df: pd.DataFrame) -> pd.DataFrame:
     """
     Trata valores nulos, preenchendo com a média ou 0
     """
-    df["remuneracao_media"].fillna(df["remuneracao_media"].mean(), inplace=True)
+    df["remuneração_média"].fillna(df["remuneração_média"].mean(), inplace=True)
     numeric_cols = df.select_dtypes(include=['float64', 'int64']).columns
     df[numeric_cols] = df[numeric_cols].fillna(0)
     return df
@@ -45,4 +45,5 @@ if __name__ == "__main__":
     df = pd.read_csv("./data/raw/merged_df.csv")
     df = transform_data(df)
     print(df.head())
+    print("Colunas disponíveis:", df.columns.tolist())
 
