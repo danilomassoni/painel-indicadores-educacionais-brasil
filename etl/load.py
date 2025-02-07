@@ -3,7 +3,7 @@ import pandas as pd
 from sqlalchemy import create_engine
 import os
 
-db_url = os.getenv("DATABASE_URL", "postgresql+psycopg2://postgres:1234@localhost:5432/painel_indicadores_educacionais")
+
 
 def load_to_postgres(df: pd.DataFrame, indicadores: str, db_url: str):
     """

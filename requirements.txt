@@ -1,0 +1,5 @@
+
+# Dependências principais
+pandas=>2.0.0
+sqlalchemy=>2.0.0
+psycopg2=>2.9.0
