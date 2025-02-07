@@ -16,7 +16,7 @@ def handle_missing_values(df: pd.DataFrame) -> pd.DataFrame:
     """
     Trata valores nulos, preenchendo com a média ou 0
     """
-    df["remuneração_média"].fillna(df["remuneração_média"].mean(), inplace=True)
+    df["remuneração_média"] = df["remuneração_média"].fillna(df["remuneração_média"].mean())
     numeric_cols = df.select_dtypes(include=['float64', 'int64']).columns
     df[numeric_cols] = df[numeric_cols].fillna(0)
     return df
@@ -25,7 +25,7 @@ def convert_data_types(df: pd.DataFrame) -> pd.DataFrame:
     """
     Converta colunas numéricas para o tipo correto
     """
-    numeric_cols = df.select_dtypes(include=['object']).columns
+    numeric_cols = [col for col in df.columns if df[col].dtype == 'object' and df[col].str.replace('.', '', 1).str.isnumeric().all()]
     for col in numeric_cols:
         df[col] = pd.to_numeric(df[col], errors='coerce')
     return df
@@ -37,7 +37,10 @@ def transform_data(df: pd.DataFrame) -> pd.DataFrame:
     df = clean_column_names(df)
     df = handle_missing_values(df)
     df = convert_data_types(df)
-    print("Dados transformados com sucesso!")
+
+    df.to_csv("./data/processed/transformed_df.csv", index=False)
+    print("Dados transformados e salvo com sucesso!")
+
     return df
 
 # Opcional para testar

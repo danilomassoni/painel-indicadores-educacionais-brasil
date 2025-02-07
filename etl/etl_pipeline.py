@@ -1,8 +1,14 @@
 # Script principal que executa o ETL completo
+import sys
 import os
-from etl.extract import extract_data
-from etl.transform import transform_data
-from etl.load import load_to_postgres
+import pandas as pd
+
+# Adiciona o diretório do projeto ao sys.path
+sys.path.append(os.path.dirname(os.path.abspath(__file__)))
+
+from extract import extract_data
+from transform import transform_data
+from load import load_to_postgres
 
 def run_etl():
     """
@@ -13,7 +19,7 @@ def run_etl():
     raw_data_path = "data/raw/merged_df.csv"
     processed_data_path = "data/processed/transformed_data.csv"
     indicadores = "indicadores_educacionais"
-    db_url = os.getenv("DATABASE_URL", "postgresql://user:password@localhost:5432/painel_indicadores_educacionais")
+    db_url = os.getenv("DATABASE_URL", "postgresql+psycopg2://postgres:1234@localhost:5432/painel_indicadores_educacionais")
 
     # Extração
     print ("Extraindo os dados........")
