@@ -1,0 +1,1 @@
+# Exportação dos dados prontos para Power BI
