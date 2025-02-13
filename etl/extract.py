@@ -4,7 +4,7 @@ import os
 
 def extract_data(filepath: str) -> pd.DataFrame: 
     """
-    Lê um arquivo em CSV e retorna um DataFrame Pandas.
+    Lê um arquivo em CSV e retorna um DataFrame da biblioteca Pandas.
     
     :param filepath: Caminho para o CSV.
     :return: DataFrame com os dados lidos.
