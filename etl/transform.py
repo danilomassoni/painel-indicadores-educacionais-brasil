@@ -30,6 +30,13 @@ def convert_data_types(df: pd.DataFrame) -> pd.DataFrame:
         df[col] = pd.to_numeric(df[col], errors='coerce')
     return df
 
+def add_country(df: pd.DataFrame) -> pd.DataFrame:
+    """
+    Adiciona coluna com o nome do país
+    """
+    df["country"] = "Brasil"
+    return df
+
 def transform_data(df: pd.DataFrame) -> pd.DataFrame:
     """
     Aplica todas as transformações necessárias
@@ -37,6 +44,7 @@ def transform_data(df: pd.DataFrame) -> pd.DataFrame:
     df = clean_column_names(df)
     df = handle_missing_values(df)
     df = convert_data_types(df)
+    df = add_country(df)
 
     df.to_csv("./data/processed/transformed_df.csv", index=False)
     print("Dados transformados e salvo com sucesso!")
