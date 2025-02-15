@@ -15,6 +15,7 @@ def clean_column_names(df : pd.DataFrame) -> pd.DataFrame:
 def handle_missing_values(df: pd.DataFrame) -> pd.DataFrame:
     """
     Trata valores nulos, preenchendo com a média ou 0
+    Esta função precisa de mais atenção
     """
     df["remuneração_média"] = df["remuneração_média"].fillna(df["remuneração_média"].mean())
     numeric_cols = df.select_dtypes(include=['float64', 'int64']).columns
