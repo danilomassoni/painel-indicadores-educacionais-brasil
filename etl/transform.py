@@ -46,7 +46,7 @@ def transform_data(df: pd.DataFrame) -> pd.DataFrame:
     df = convert_data_types(df)
     df = add_country(df)
 
-    df.to_csv("./data/processed/transformed_df.csv", index=False)
+    df.to_csv("./data/processed/transformed_df.csv", index=False) # Cria um arquivo CSV com os dados transformados
     print("Dados transformados e salvo com sucesso!")
 
     return df
