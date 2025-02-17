@@ -83,6 +83,7 @@ def transform_data(df: pd.DataFrame) -> pd.DataFrame:
     df = convert_data_types(df)
     df = add_country(df)
     df = add_media_region(df, "unidade_geográfica", "remuneração_média")
+    df = add_media_region(df, "unidade_geográfica", "remuneração_40hrs_semanais")
 
     df.to_csv("./data/processed/transformed_df.csv", index=False) # Cria um arquivo CSV com os dados transformados
     print("Dados transformados e salvo com sucesso!")
