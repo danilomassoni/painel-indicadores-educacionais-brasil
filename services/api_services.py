@@ -22,7 +22,7 @@ def read_root():
 @app.get("/indicadores/")
 def get_indicadores():
     try:
-        query = "SELECT * FROM indicadores"
+        query = "SELECT * FROM indicadores_educacionais"
         df = pd.read_sql(query, engine)
         return df.to_dict(orient="records")
     except Exception as e:
@@ -52,3 +52,6 @@ def get_indicadores_estado(estado: str):
         return df.to_dict(orient="records")
     except Exception as e:
         raise HTTPException(status_code=500, detail=str(e))
+    
+
+# PARA SUBIR A API, EXECUTE O SEGUINTE COMANDO NO TERMINAL: uvicorn services.api_services:app --host 0.0.0.0 --port 8000 --reload --log-level debug
