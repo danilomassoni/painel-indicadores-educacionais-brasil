@@ -1,0 +1,103 @@
+<!DOCTYPE html>
+<html LANG="en">
+    <head>
+        <mea charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>Indicadores Educacionais</title>
+        <style>
+            body {
+      font-family: Arial, sans-serif;
+      margin: 20px;
+    }
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      margin-top: 20px;
+    }
+    th, td {
+      border: 1px solid #ddd;
+      padding: 8px;
+      text-align: left;
+    }
+    th {
+      background-color: #f2f2f2;
+    }
+    button {
+      padding: 10px 15px;
+      margin: 5px;
+      cursor: pointer;
+    }
+        </style>
+    </head>
+<body>
+    <h1>Indicadores Educacionais</h1>
+  <table id="data-table">
+    <thead>
+      <tr>
+        <th>ID</th>
+        <th>Indicador</th>
+        <th>Valor</th>
+      </tr>
+    </thead>
+    <tbody id="data-body">
+      <!-- Os dados serão inseridos aqui dinamicamente -->
+    </tbody>
+  </table>
+  <div>
+    <button id="prev-btn" onclick="prevPage()">Anterior</button>
+    <button id="next-btn" onclick="nextPage()">Próximo</button>
+  </div>
+
+  <script>
+    let currentPage = 1;
+    const pageSize = 10;
+
+    // Função para buscar dados da API
+    async function fetchData(page) {
+        try {
+            const response = await fetch(`http://localhost:8000/indicadores/?page=${page}&page_size=${pageSize}`);
+            if (!response.ok) {
+                throw new Error("Erro ao buscar dados da API");
+            }
+            const data = await response.json();
+            renderTable(data.data); // Preencher a tabela
+        } catch (error) {
+            console.error("Erro:", error);
+        }
+    }
+    //Função para renderizar dados em tabela
+    function renderTable(data) {
+        const tableBody = document.getElementById("data-body");
+        tableBody.innerHTML = "";
+
+        data.forEach((item) => {
+            const row = `
+                <tr>
+                    <td>${item.id}</td>
+                    <td>${item.indicador}</td>
+                    <td>${item.valor}</td>
+                </tr>
+            `;
+            tableBody.innerHTML += row;
+        });
+    }
+
+    // Função para ir para a próxima página
+    function nextPage() {
+        currentPage++;
+        fetchData(currentPage);
+    }
+
+    // Função para ir para a página anterior
+    function prevPage(){
+        if (currentPage > 1) {
+            currentPage--;
+            fetchData(currentPage);
+        }
+    }
+
+    // Carrega os dados da primeira página ao abrir a página
+    fetchData(currentPage);
+  </script>
+</body>
+</html>

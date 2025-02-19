@@ -47,14 +47,6 @@ def get_indicadores(page: int = Query(1, ge=1), page_size: int = Query(10, ge=1,
     except Exception as e:
         raise HTTPException(status_code=500, detail=str(e))
 
-
-
-
-
-
-
-
-
 # Endpoint para consultar um indicador específico por ID
 @app.get("/indicadores/{indicador_id}")
 def get_indicador(indicador_id: int):
@@ -83,3 +75,4 @@ def get_indicadores_estado(estado: str):
 # PARA SUBIR A API, EXECUTE O SEGUINTE COMANDO NO TERMINAL: uvicorn services.api_services:app --host 0.0.0.0 --port 8000 --reload --log-level debug
 
 # Acesse no navegador: http://localhost:8000/indicadores/
+# Acesse os primeiros 5: http://localhost:8000/indicadores/?page=1&page_size=5
