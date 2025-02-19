@@ -1,6 +1,6 @@
 # Definição da API com FastAPI
 
-from fastapi import FastAPI, HTTPException
+from fastapi import FastAPI, HTTPException, Query
 from sqlalchemy import create_engine
 import pandas as pd
 import os
@@ -20,14 +20,40 @@ def read_root():
 
 # Endpoint para consultar todos os indicadores
 @app.get("/indicadores/")
-def get_indicadores():
+def get_indicadores(page: int = Query(1, ge=1), page_size: int = Query(10, ge=1, le=100)):
     try:
+        #Cosonta todos os dados
         query = "SELECT * FROM indicadores_educacionais"
         df = pd.read_sql(query, engine)
-        return df.to_dict(orient="records")
+
+        # Cálculo de início e fim para a página solicitada
+        start_index = (page - 1) * page_size
+        end_index = start_index + page_size
+
+        # Verificar se a página é válida
+        if start_index >= len(df):
+            raise HTTPException(status_code=404, detail="Página não encontrada")
+
+        # Retornar apenas os registros da página atual
+        paginated_data = df.iloc[start_index:end_index]
+        return {
+            "page": page,
+            "page_size": page_size,
+            "total_records": len(df),
+            "total_pages": (len(df) // page_size) + (1 if len(df) % page_size > 0 else 0),
+            "data": paginated_data.to_dict(orient="records")
+        }
+
     except Exception as e:
         raise HTTPException(status_code=500, detail=str(e))
-    
+
+
+
+
+
+
+
+
 
 # Endpoint para consultar um indicador específico por ID
 @app.get("/indicadores/{indicador_id}")
