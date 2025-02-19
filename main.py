@@ -1,6 +1,13 @@
 # Módulo principal do projeto
 
 from etl.etl_pipeline import run_etl
+from fastapi import FastAPI
+from fastapi.staticfiles import StaticFiles
+
+app = FastAPI()
+
+# Servir os arquivos estáticos da pasta static
+app.mount("/", StaticFiles(directory="static", html=True), name="static")
 
 def main():
     """
