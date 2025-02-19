@@ -31,6 +31,14 @@ def convert_data_types(df: pd.DataFrame) -> pd.DataFrame:
         df[col] = pd.to_numeric(df[col], errors='coerce')
     return df
 
+def add_column_id(df: pd.DataFrame) -> pd.DataFrame:
+    """
+    Adiciona uma coluna de ID, na primeira coluna
+    """
+    if not df.empty and len(df.columns) > 0:
+        df.rename(columns={df.columns[0]: "id"}, inplace=True)
+    return df
+
 def add_country(df: pd.DataFrame) -> pd.DataFrame:
     """
     Adiciona coluna com o nome do país
@@ -82,6 +90,7 @@ def transform_data(df: pd.DataFrame) -> pd.DataFrame:
     df = handle_missing_values(df)
     df = convert_data_types(df)
     df = add_country(df)
+    df = add_column_id(df)
     df = add_media_region(df, "unidade_geográfica", "remuneração_média")
     df = add_media_region(df, "unidade_geográfica", "remuneração_40hrs_semanais")
 

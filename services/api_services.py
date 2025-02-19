@@ -29,11 +29,11 @@ def get_indicadores():
         raise HTTPException(status_code=500, detail=str(e))
     
 
-# Endpoint para consultar um indicador específico
+# Endpoint para consultar um indicador específico por ID
 @app.get("/indicadores/{indicador_id}")
 def get_indicador(indicador_id: int):
     try:
-        query = f"SELECT * FROM indicadores WHERE id = {indicador_id}"
+        query = f"SELECT * FROM indicadores_educacionais WHERE id = '{indicador_id}'"
         df = pd.read_sql(query, engine)
         if df.shape[0] == 0:
             raise HTTPException(status_code=404, detail="Indicador não encontrado")
@@ -45,7 +45,7 @@ def get_indicador(indicador_id: int):
 @app.get("/indicadores/estado/{estado}")
 def get_indicadores_estado(estado: str):
     try:
-        query = f"SELECT * FROM indicadores WHERE unidade_geográfica = '{estado}'"
+        query = f"SELECT * FROM indicadores_educacionais WHERE unidade_geográfica = '{estado}'"
         df = pd.read_sql(query, engine)
         if df.shape[0] == 0:
             raise HTTPException(status_code=404, detail="Indicadores não encontrados")
@@ -55,3 +55,5 @@ def get_indicadores_estado(estado: str):
     
 
 # PARA SUBIR A API, EXECUTE O SEGUINTE COMANDO NO TERMINAL: uvicorn services.api_services:app --host 0.0.0.0 --port 8000 --reload --log-level debug
+
+# Acesse no navegador: http://localhost:8000/indicadores/
